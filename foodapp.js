@@ -18,7 +18,8 @@
 // - Car time
 
 //https://whatwebcando.today/ Check if the browser on the device supports certain features, notifications, Geolocation (GPS), 
-
+// Geolocation
+// https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
 // [User Interface]  --> REACT & PWA
 // https://engineering.musefind.com/build-your-first-progressive-web-app-with-react-8e1449c575cd
 // [APIs Involved]
@@ -28,6 +29,7 @@
 
 
 // [Database]
+// https://firebase.google.com/?authuser=0
 // [Randomizer Algorithm ] ^^
 
 const request = require('request')
@@ -49,6 +51,7 @@ const options = {
   }
 }
 
+
 request.get(options, function(err, response) {
   let results = JSON.parse(response.body)
   results.businesses.forEach((value, index) => {
@@ -56,3 +59,26 @@ request.get(options, function(err, response) {
   })
   // console.log(JSON.parse(response.body))
 })  
+
+
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+}
+
+function success(pos) {
+  var crd = pos.coords
+
+  console.log('Your current position is:')
+  console.log(`Latitude : ${crd.latitude}`)
+  console.log(`Longitude: ${crd.longitude}`)
+  console.log(`More or less ${crd.accuracy} meters.`)
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`)
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options)
